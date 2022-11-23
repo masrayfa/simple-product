@@ -2,50 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
 export default function Home() {
-  const [imageSrc, setImageSrc] = useState<
-    string | ArrayBuffer | null | undefined
-  >()
-  const [upload, setUpload] = useState()
-
-  const handleOnChange = (changeEvent: any) => {
-    const reader = new FileReader()
-
-    reader.onload = (onLoadEvent) => {
-      setImageSrc(onLoadEvent.target?.result)
-      setUpload(undefined)
-    }
-
-    reader.readAsDataURL(changeEvent.target.files[0])
-  }
-
-  const handleSubmit = async (event: any) => {
-    event?.preventDefault()
-    const form = event?.currentTarget
-    const fileInput: any = Array.from(form.elements).find(
-      ({ name }: any) => name === 'file'
-    )
-
-    const formData = new FormData()
-
-    for (const file of fileInput.files) {
-      formData.append('file', file)
-    }
-
-    formData.append('upload_preset', 'just-upload')
-    console.log(formData)
-
-    const data = await fetch(
-      'https://api.cloudinary.com/v1_1/dbvozzs8x/image/upload',
-      {
-        method: 'POST',
-        body: formData,
-      }
-    ).then((res) => res.json())
-    console.log('dis data', data)
-  }
-
   return (
     <div className={styles.container}>
       <Head>
@@ -55,19 +14,10 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Add your product!</h1>
-        <form action="post" onChange={handleOnChange} onSubmit={handleSubmit}>
-          <p>
-            <input type="file" name="file"></input>
-          </p>
-
-          <img src={imageSrc} alt="src"></img>
-          {imageSrc && !upload && (
-            <p>
-              <button>Upload Files</button>
-            </p>
-          )}
-        </form>
+        <h1 className={styles.title}>This is your simple product API</h1>
+        <Link href={'./uploadPage'}>
+          Navigate to this page to upload your products
+        </Link>
       </main>
 
       <footer className={styles.footer}>

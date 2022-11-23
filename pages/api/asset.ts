@@ -16,7 +16,7 @@ export default async function handler(
         category_id: data.category_id,
       },
     })
-    res.status(200).json({ name: 'John bon', ikidata: result })
+    res.status(200).json({ result })
   } catch (err) {
     res.status(500).json(err)
   }

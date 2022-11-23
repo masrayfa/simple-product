@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useState } from 'react'
 import styles from '../styles/Home.module.css'
-import { Router, useRouter } from 'next/router'
 import { prisma } from '../lib/prisma'
 
 type AssetProps = {

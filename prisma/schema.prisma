@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+model Category {
+  id            Int    @id @default(autoincrement())
+  category_name String
+  category_slug String
+  asset         Asset?
+  asset_id      Int
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+model Asset {
+  id   Int    @id @default(autoincrement())
+  name String
+  path String
+  size Float
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  category      Category?       @relation(fields: [category_id], references: [id])
+  category_id   Int            @unique
+  Product_Asset Product_Asset?
+}
+
+model Product {
+  id           Int    @id @default(autoincrement())
+  product_name String
+  product_slug String
+  price        Float
+  description  String
+
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  Product_Asset Product_Asset[]
+}
+
+model Product_Asset {
+  id         Int     @id @default(autoincrement())
+  asset      Asset   @relation(fields: [asset_id], references: [id])
+  asset_id   Int     @unique
+  product    Product @relation(fields: [product_id], references: [id])
+  product_id Int     @unique
+}

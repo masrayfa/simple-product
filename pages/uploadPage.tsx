@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useState } from 'react'
 import styles from '../styles/Home.module.css'
-import { prisma } from '../lib/prisma'
 
 type AssetProps = {
   asset_name: string
@@ -96,11 +95,6 @@ export default function UploadPage() {
           secure_url: upDataImage.secure_url,
           bytes: upDataImage.bytes,
           category_id: 12,
-
-          // original_filename: 'gambar next',
-          // secure_url: 'disitu',
-          // bytes: 2048,
-          // category_id: 4,
         }),
       })
 
@@ -115,15 +109,8 @@ export default function UploadPage() {
           product_slug: prodSlug?.product_slug,
           description: prodDesc?.description,
           price: prodPrice?.price,
-          // product_name: 'nintendow',
-          // product_slug: 'disitu',
-          // description: 'untuk bermain',
-          // price: 7000,
         }),
       })
-
-      console.log('dis data', assetData)
-      console.log('dis product', productData)
     } catch (e) {
       console.error(e)
     }
